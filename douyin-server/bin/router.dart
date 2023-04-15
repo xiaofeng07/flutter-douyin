@@ -5,8 +5,9 @@ import 'package:shelf_router/shelf_router.dart';
 import 'database_helper.dart';
 
 final router = Router()
-  ..mount('/api/v1/video', UserApi().router)
+  ..mount('/api/v1/video', VideoApi().router)
   ..mount('/api/v1/user', UserApi().router)
+  ..mount('/api/v1/message', MessageApi().router)
   ..mount('/manager/api/v1', Service().router)
   ..get('/<ignored|.*>', _notFoundHandler);
 
@@ -70,6 +71,29 @@ class UserApi {
     final router = Router();
 
     router.post('/login', _login);
+
+    return router;
+  }
+}
+
+//消息相关接口
+class MessageApi {
+  //获取消息列表
+  Future<Response> _getMessageList(Request request) async {
+    var formData = await request.readAsString();
+    var result = await queryMessageList();
+
+    return Response.ok(
+        jsonEncode({'code': 200, 'message': 'ok', 'data': result}),
+        headers: {
+          HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
+        });
+  }
+
+  Router get router {
+    final router = Router();
+
+    router.post('/getMessageList', _getMessageList);
 
     return router;
   }

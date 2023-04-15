@@ -11,7 +11,7 @@
  Target Server Version : 80032
  File Encoding         : 65001
 
- Date: 07/04/2023 20:13:06
+ Date: 15/04/2023 11:54:58
 */
 
 SET NAMES utf8mb4;
@@ -70,6 +70,24 @@ CREATE TABLE `tb_interest`  (
 
 -- ----------------------------
 -- Records of tb_interest
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for tb_message
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_message`;
+CREATE TABLE `tb_message`  (
+  `id` int NOT NULL,
+  `from_userid` int NULL DEFAULT NULL COMMENT '谁发送的消息',
+  `to_userid` int NULL DEFAULT NULL COMMENT '我发给谁的消息',
+  `create_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '消息发送时间',
+  `update_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '消息内容',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of tb_message
 -- ----------------------------
 
 -- ----------------------------
@@ -152,7 +170,7 @@ CREATE TABLE `tb_video_info`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `user_id`(`user_id`) USING BTREE,
   CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `tb_user_info` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of tb_video_info

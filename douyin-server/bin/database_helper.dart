@@ -39,3 +39,13 @@ Future<Map<String, dynamic>> login(String userName, String password) async {
 
   return jsonData;
 }
+
+//获取消息列表
+Future<List<Map<String, dynamic>>> queryMessageList() async {
+  var result = await pool.execute('select * from tb_video_info');
+
+  final jsonData = result.rows.map((row) => row.typedAssoc()).toList();
+  print(jsonData.toString());
+
+  return jsonData;
+}
