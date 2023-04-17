@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_douyin/router/app_router.dart';
+import 'package:flutter_douyin/router/router_table.dart';
 import 'package:flutter_douyin/ui/page/main_page.dart';
 import 'package:flutter_douyin/ui/theme/theme.dart';
-import 'package:flutter_douyin/ui/widgets/player_page.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-
-
 
 void main() {
   //为了使Provider发挥作用，您必须在Flutter应用程序的根部添加ProviderScope。
@@ -19,8 +17,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: AppRouter.navigatorKey,
+      //navigatorObservers: [AppRouteObserver()],
       debugShowCheckedModeBanner: false,
-        theme: getTheme(),home: const ScaffoldRoute(),
+      theme: getTheme(),
+      home: const MainPage(),
+      onGenerateRoute: RouterTable.onGenerateRoute,
+      initialRoute: RouterTable.splashPath,
     );
   }
 }

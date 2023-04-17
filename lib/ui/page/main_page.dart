@@ -13,14 +13,14 @@ import 'package:flutter_douyin/ui/theme/theme.dart';
 /// @UpdateDate:     2023/4/4 13:25
 /// @UpdateRemark:
 /// @Version:        1.0
-class ScaffoldRoute extends StatefulWidget {
-  const ScaffoldRoute({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  State<ScaffoldRoute> createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<ScaffoldRoute> {
+class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
   final List _pageList = [
     HomePage(),
