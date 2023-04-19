@@ -13,16 +13,40 @@ class VideoDao {
     return jsonData;
   }
 
-//查询视频列表数据
+  //根据类型查询视频列表数据
+  Future<List<Map<String, dynamic>>> queryVideoListByType() async {
+    var result =
+        await DatabaseManager.pool.execute('select * from tb_video_info');
+
+    final jsonData = result.rows.map((row) => row.typedAssoc()).toList();
+    print(jsonData.toString());
+
+    return jsonData;
+  }
+
+  //根据用户ID查询视频列表数据
+  Future<List<Map<String, dynamic>>> queryVideoListById(int userId) async {
+    var result = await DatabaseManager.pool.execute(
+        'select * from tb_video_info where user_id=:userId',
+        {"userId": userId});
+
+    final jsonData = result.rows.map((row) => row.typedAssoc()).toList();
+    print(jsonData.toString());
+
+    return jsonData;
+  }
+
+//发布作品
   Future<bool> insertVideo(Map<String, dynamic> video) async {
     bool result = await DatabaseManager.insertRow("tb_video_info", video);
     return result;
   }
 
 //根据作品ID获取评论列表
-  Future<List<Map<String, dynamic>>> queryCommentList(int id) async {
-    var result =
-        await DatabaseManager.pool.execute('select * from tb_video_info');
+  Future<List<Map<String, dynamic>>> queryCommentList(int videoId) async {
+    var result = await DatabaseManager.pool.execute(
+        'select * from tb_comment where belong_id=:videoId',
+        {"videoId": videoId});
 
     final jsonData = result.rows.map((row) => row.typedAssoc()).toList();
     print(jsonData.toString());

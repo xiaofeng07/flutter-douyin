@@ -23,6 +23,7 @@ class DatabaseManager {
         "INSERT INTO `$tableName` (${map.keys.join(',')}) VALUES ($params)";
     logger.d(sql);
     var res = await DatabaseManager.pool.execute(sql, map);
+
     return res.affectedRows.toInt() > 0;
   }
 }
