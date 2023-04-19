@@ -3,6 +3,7 @@ import 'package:flutter_douyin/router/app_router.dart';
 import 'package:flutter_douyin/router/router_table.dart';
 import 'package:flutter_douyin/ui/page/main_page.dart';
 import 'package:flutter_douyin/ui/theme/theme.dart';
+import 'package:flutter_douyin/utils/dialog_utils.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       home: const MainPage(),
       onGenerateRoute: RouterTable.onGenerateRoute,
       initialRoute: RouterTable.splashPath,
+      builder: LoadingUtils.init(),
     );
   }
 }
