@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_douyin/ui/widgets/keep_alive.dart';
 import 'package:flutter_douyin/ui/widgets/player_page.dart';
+import 'package:flutter_douyin/viewmodel/app_provider.dart';
+import 'package:flutter_douyin/viewmodel/home_vm.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// @Name:           HomePage
 /// @Description:    首页
@@ -10,14 +13,14 @@ import 'package:flutter_douyin/ui/widgets/player_page.dart';
 /// @UpdateDate:     2023/4/4 16:45
 /// @UpdateRemark:
 /// @Version:        1.0
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
+class _HomePageState extends ConsumerState<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   List tabs = ["探索", "同城", "关注", "商城", "推荐"];
@@ -27,10 +30,15 @@ class _HomePageState extends State<HomePage>
     super.initState();
     _tabController =
         TabController(initialIndex: 4, length: tabs.length, vsync: this);
+      Future.microtask(() {
+    ref.read(homeViewState.notifier).dispatch(HomeViewAction.onStart);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final viewState= ref.watch(homeViewState);
+    final viewModel = ref.read(homeViewState.notifier);
     return SafeArea(
       child: Stack(
         children: [
@@ -39,10 +47,11 @@ class _HomePageState extends State<HomePage>
             controller: _tabController,
             children: tabs.map((e) {
               return KeepAliveWrapper(
-                child: VideoScreen(
-                  url:
-                      'https://minivideo.xiu123.cn/original/5e4307cb9e434dc49ae7bebab27923ce/38d181c9-17b5f79409e.mp4',
-                ),
+                child:PageView.builder(itemCount: viewState.dataList==null? 0: viewState.dataList?.length,itemBuilder: (context,index){
+                    return VideoScreen(
+                      videoInfo: viewState.dataList![index],
+                    );
+                })
               );
             }).toList(),
           ),

@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_douyin/common/global.dart';
+import 'package:flutter_douyin/data/model/video_info.dart';
+import 'package:flutter_douyin/data/repo/home_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 class HomeVM extends StateNotifier<HomeViewState> {
   HomeVM(HomeViewState viewStates) : super(viewStates);
-
+  HomeRepository _repository = HomeRepository();
   void dispatch(HomeViewAction action) {
     logger.d("dispatch");
     switch (action) {
@@ -20,12 +22,13 @@ class HomeVM extends StateNotifier<HomeViewState> {
   }
 
   void getVideoList() {
-    state=state.copyWith(testData: "getVideoList");
+    _repository.getVideoList().then((value) =>{
+      state=state.copyWith(dataList: value)
+    });
   }
 
   void onRefresh(){
     logger.d("onRefresh");
-    state=state.copyWith(testData: "onRefresh");
   }
 }
 
@@ -38,15 +41,15 @@ enum  HomeViewAction {
 
 @immutable
 class HomeViewState {
-  final String? testData;
+  final List<VideoInfo>? dataList;
   const HomeViewState({
-     this.testData,
+     this.dataList,
 
   });
 
   HomeViewState copyWith({
-    String? testData,
+    List<VideoInfo>? dataList,
   }) {
-    return HomeViewState(testData: testData ?? this.testData);
+    return HomeViewState(dataList: dataList ?? this.dataList);
   }
 }

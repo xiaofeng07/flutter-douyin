@@ -23,9 +23,7 @@ class _FriendPageState extends ConsumerState<FriendPage> {
       //- didChangeDepedencies
       ref.read(homeViewState.notifier).dispatch(HomeViewAction.OnStart);
     });*/
-    Future.microtask(() {
-      ref.read(homeViewState.notifier).dispatch(HomeViewAction.onStart);
-    });
+
   }
 
   @override
@@ -33,7 +31,7 @@ class _FriendPageState extends ConsumerState<FriendPage> {
     final viewState= ref.watch(homeViewState);
     final viewModel = ref.read(homeViewState.notifier);
     return Center(child:  Column(children: [
-      Text("${viewState.testData}"),
+      Text("${viewState.dataList}"),
       TextButton(onPressed: (){
         viewModel.dispatch(HomeViewAction.onRefresh);
       }, child: Text("刷新"))

@@ -2,6 +2,7 @@
 
 import 'package:flutter_douyin/data/model/base_response.dart';
 import 'package:flutter_douyin/data/model/user_info.dart';
+import 'package:flutter_douyin/data/model/video_info.dart';
 import 'package:flutter_douyin/data/net/dio_manager.dart';
 
 /// @Name:           Api
@@ -16,7 +17,13 @@ import 'package:flutter_douyin/data/net/dio_manager.dart';
 class Api {
   ///================================用户相关====================================
   Future<UserInfo> login(String userName,String password)async{
-    ResultData resultData = await DioManager().post("/login", {"user_name":userName,"password":password});
+    ResultData resultData = await DioManager().post("/user/login", {"user_name":userName,"password":password});
     return resultData.data;
+  }
+
+  Future<List<VideoInfo>> getVideoList()async{
+    ResultData resultData = await DioManager().get("/video/getVideoList");
+    final videoList = resultData.data.map((json) => VideoInfo.fromJson(json)).toList();
+    return videoList;
   }
 }

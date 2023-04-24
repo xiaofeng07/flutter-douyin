@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_douyin/data/net/dio_manager.dart';
 import 'package:flutter_douyin/router/app_router.dart';
 import 'package:flutter_douyin/router/router_table.dart';
 import 'package:flutter_douyin/ui/page/main_page.dart';

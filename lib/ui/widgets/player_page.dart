@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_douyin/common/app_icon.dart';
 import 'package:flutter_douyin/common/global.dart';
+import 'package:flutter_douyin/data/model/video_info.dart';
 import 'package:flutter_douyin/ui/animation/favorite_heart.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:player/player.dart';
@@ -17,9 +18,9 @@ import 'package:player/video_view.dart';
 /// @Version:        1.0
 
 class VideoScreen extends StatefulWidget {
-  final String url;
+  final VideoInfo videoInfo;
 
-  VideoScreen({Key? key, required this.url});
+  VideoScreen({Key? key, required this.videoInfo});
 
   @override
   _VideoScreenState createState() => _VideoScreenState();
@@ -33,11 +34,12 @@ class _VideoScreenState extends State<VideoScreen> {
   @override
   void initState() {
     super.initState();
-    player.setDataSource(widget.url, autoPlay: true);
+    player.setDataSource(widget.videoInfo.playUrl!, autoPlay: true);
   }
 
   @override
   Widget build(BuildContext context) {
+    final videoInfo = widget.videoInfo;
     return Scaffold(
         body: Stack(
       children: [
@@ -271,7 +273,7 @@ class _VideoScreenState extends State<VideoScreen> {
                           GestureDetector(
                               onTap: () {
                                 //保存本地
-                                _saveLocal(widget.url);
+                                _saveLocal(widget.videoInfo.playUrl!);
                               },
                               child: Container(
                                 margin:

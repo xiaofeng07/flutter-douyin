@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_douyin/common/app_config.dart';
 import 'package:flutter_douyin/data/model/base_response.dart';
 import 'package:flutter_douyin/data/net/interceptor.dart';
@@ -16,23 +17,20 @@ import 'package:flutter_douyin/utils/dialog_utils.dart';
 /// @Version:        1.0
 
 class DioManager {
-  late Dio _dio;
+  final Dio _dio= Dio();
 
   static DioManager? _instance;
 
   DioManager._() {
-      if(_dio == null){
-        final Dio dio = Dio();
-        dio.options = BaseOptions(
+        _dio.options = BaseOptions(
           baseUrl: Address.BASE_URL,
           receiveTimeout: const Duration(seconds: 5),
           connectTimeout: const Duration(seconds: 6),
         );
-        dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
-        dio.interceptors.add(HeaderInterceptor());
-        dio.interceptors.add(ResponseInterceptor());
-        dio.interceptors.add(CacheInterceptor());
-      }
+        _dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+        _dio.interceptors.add(HeaderInterceptor());
+        _dio.interceptors.add(ResponseInterceptor());
+        _dio.interceptors.add(CacheInterceptor());
   }
 
   setBaseUrl(String baseUrl){
