@@ -1,5 +1,7 @@
 
 
+import 'dart:convert';
+
 import 'package:flutter_douyin/data/model/base_response.dart';
 import 'package:flutter_douyin/data/model/user_info.dart';
 import 'package:flutter_douyin/data/model/video_info.dart';
@@ -26,4 +28,11 @@ class Api {
 
     return resultData.data;
   }
+
+  Future<List<VideoInfo>> getFriendsVideoList(List<int> friendIds)async{
+    ResultData resultData = await DioManager().get<List<VideoInfo>>("/video/getFriendsVideoList",queryParameters: {"friendIds":jsonEncode(friendIds)});
+
+    return resultData.data;
+  }
+
 }

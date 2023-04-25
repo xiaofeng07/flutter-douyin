@@ -133,11 +133,12 @@ class _VideoScreenState extends State<VideoScreen> {
                   const SizedBox(height: 30),
                   ClipOval(
                       child: Image.network(
-                    'https://pic.netbian.com/uploads/allimg/170424/105210-1493002330557b.jpg',
+                    '${videoInfo.picUser}',
                     width: 60,
                     height: 60,
                     fit: BoxFit.fill,
-                  ))
+                  )),
+                  const SizedBox(height: 5),
                 ],
               ),
             ))
@@ -153,7 +154,7 @@ class _VideoScreenState extends State<VideoScreen> {
             topRight: Radius.circular(15.0),
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 243, 243, 243),
+        backgroundColor: Colors.white,
         context: context,
         builder: (BuildContext context) {
           return Container(
@@ -168,14 +169,14 @@ class _VideoScreenState extends State<VideoScreen> {
                       padding: EdgeInsets.only(left: 20),
                       child: Text(
                         '分享给朋友',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(fontWeight: FontWeight.bold ,color: Colors.black),
                       ),
                     ),
                     IconButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        icon: const Icon(Icons.close_rounded))
+                        icon: const Icon(Icons.close_rounded,color: Colors.black))
                   ],
                 ),
                 SizedBox(
@@ -197,61 +198,9 @@ class _VideoScreenState extends State<VideoScreen> {
                               height: 50,
                               fit: BoxFit.fill,
                             )),
-                            Text('用户昵称')
+                            Text('用户昵称',style: TextStyle( color: Colors.black))
                           ],
                         ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ClipOval(
-                                child: Image.network(
-                              'https://pic.netbian.com/uploads/allimg/170424/105210-1493002330557b.jpg',
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            )),
-                            Text('用户昵称')
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ClipOval(
-                                child: Image.network(
-                              'https://pic.netbian.com/uploads/allimg/170424/105210-1493002330557b.jpg',
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            )),
-                            Text('用户昵称')
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ClipOval(
-                                child: Image.network(
-                              'https://pic.netbian.com/uploads/allimg/170424/105210-1493002330557b.jpg',
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            )),
-                            Text('用户昵称')
-                          ],
-                        ),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ClipOval(
-                                child: Image.network(
-                              'https://pic.netbian.com/uploads/allimg/170424/105210-1493002330557b.jpg',
-                              width: 50,
-                              height: 50,
-                              fit: BoxFit.fill,
-                            )),
-                            Text('用户昵称')
-                          ],
-                        )
                       ],
                     )),
                 const Divider(
@@ -279,7 +228,7 @@ class _VideoScreenState extends State<VideoScreen> {
                             ),
                           ),
                           const Center(
-                            child: Text("复制链接"),
+                            child: Text("复制链接",style: TextStyle( color: Colors.black),),
                           )
                         ],
                       ),
@@ -305,7 +254,7 @@ class _VideoScreenState extends State<VideoScreen> {
                                 ),
                               )),
                           const Center(
-                            child: Text("保存本地"),
+                            child: Text("保存本地",style: TextStyle( color: Colors.black)),
                           )
                         ],
                       )

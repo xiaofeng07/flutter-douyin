@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_douyin/router/app_router.dart';
+import 'package:flutter_douyin/router/router_table.dart';
 import 'package:flutter_douyin/ui/page/friends_page.dart';
 import 'package:flutter_douyin/ui/page/home_page.dart';
 import 'package:flutter_douyin/ui/page/message_page.dart';
 import 'package:flutter_douyin/ui/page/profile_page.dart';
 import 'package:flutter_douyin/ui/theme/theme.dart';
+import 'package:flutter_douyin/utils/app_utils.dart';
 
 /// @Name:           ScaffoldRoute
 /// @Description:    主框架
@@ -42,22 +45,25 @@ class _MainPageState extends State<MainPage> {
                     onTap: () {
                       _onItemTapped(0);
                     },
-                    child:  Text(
+                    child: Text(
                       "首页",
-                      style: TextStyle(fontWeight: FontWeight.bold,color: getColor(0)),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: getColor(0)),
                     )),
                 GestureDetector(
                     onTap: () {
                       _onItemTapped(1);
                     },
-                    child:  Text("朋友",
-                        style: TextStyle(fontWeight: FontWeight.bold,color: getColor(1)))),
+                    child: Text("朋友",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: getColor(1)))),
                 GestureDetector(
                   child: Container(
-                      decoration:BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(5)),
-                        border: Border.all(width: 1,color: Colors.white)),
-                    child:  const Icon(Icons.add)
+                      decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(5)),
+                          border: Border.all(width: 1, color: Colors.white)),
+                      child: const Icon(Icons.add)
                   ),
                   onTap: () {},
                 ),
@@ -65,29 +71,35 @@ class _MainPageState extends State<MainPage> {
                     onTap: () {
                       _onItemTapped(2);
                     },
-                    child:  Text("消息",
-                        style: TextStyle(fontWeight: FontWeight.bold,color: getColor(2)))),
+                    child: Text("消息",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: getColor(2)))),
                 GestureDetector(
                     onTap: () {
                       _onItemTapped(3);
                     },
-                    child:  Text("我",
-                        style: TextStyle(fontWeight: FontWeight.bold,color: getColor(3)))),
+                    child: Text("我",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: getColor(3)))),
               ], //均分底部导航栏横向空间
             )));
   }
 
-  Color getColor(int index){
-    if(index==_selectedIndex){
+  Color getColor(int index) {
+    if (index == _selectedIndex) {
       return Colors.white;
-    }else{
+    } else {
       return Colors.grey;
     }
   }
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (index != 0 && !AppUtils.isLogin()) {
+      AppRouter.pushNamed(context, RouterTable.loginPath);
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 }
