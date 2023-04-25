@@ -47,7 +47,7 @@ class _HomePageState extends ConsumerState<HomePage>
             controller: _tabController,
             children: tabs.map((e) {
               return KeepAliveWrapper(
-                child:PageView.builder(itemCount: viewState.dataList==null? 0: viewState.dataList?.length,itemBuilder: (context,index){
+                child:PageView.builder(scrollDirection:Axis.vertical,itemCount: viewState.dataList==null? 0: viewState.dataList?.length,itemBuilder: (context,index){
                     return VideoScreen(
                       videoInfo: viewState.dataList![index],
                     );

@@ -22,8 +22,8 @@ class Api {
   }
 
   Future<List<VideoInfo>> getVideoList()async{
-    ResultData resultData = await DioManager().get("/video/getVideoList");
-    final videoList = resultData.data.map((json) => VideoInfo.fromJson(json)).toList();
-    return videoList;
+    ResultData resultData = await DioManager().get<List<VideoInfo>>("/video/getVideoList");
+
+    return resultData.data;
   }
 }

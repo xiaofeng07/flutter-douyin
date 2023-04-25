@@ -14,7 +14,7 @@ class FavoriteHeart extends StatefulWidget {
   final Widget child;
   final double size;
 
-  const FavoriteHeart({Key? key, required this.child, this.size = 100.0})
+  const FavoriteHeart({Key? key, required this.child, this.size = 100.0,Function? callBack})
       : super(key: key);
 
   @override

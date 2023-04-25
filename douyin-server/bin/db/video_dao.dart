@@ -4,8 +4,8 @@ import 'database_utils.dart';
 class VideoDao {
   //查询视频列表数据
   Future<List<Map<String, dynamic>>> queryVideoList() async {
-    var result =
-        await DatabaseManager.pool.execute('select * from tb_video_info');
+    var result = await DatabaseManager.pool.execute(
+        'SELECT	id, 	user_id, 	title, 	alias, 	pic_user, 	pic_url, 	play_url, 	sec, 	favorite_num, 	comment_num, 	collect_num, 	share_num, 	CASE is_favorite     WHEN 1 THEN TRUE     ELSE FALSE   END AS is_favorite , 	CASE is_collected     WHEN 1 THEN TRUE     ELSE FALSE   END AS is_collected ,  	create_time, 	update_time, 	topicFROM	tb_video_info');
 
     final jsonData = result.rows.map((row) => row.typedAssoc()).toList();
     print(jsonData.toString());

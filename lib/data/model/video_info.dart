@@ -25,9 +25,9 @@ class VideoInfo {
 	@JSONField(name: "share_num")
 	int? shareNum;
 	@JSONField(name: "is_favorite")
-	int? isFavorite;
+	bool? isFavorite;
 	@JSONField(name: "is_collected")
-	int? isCollected;
+	bool? isCollected;
 	@JSONField(name: "create_time")
 	String? createTime;
 	@JSONField(name: "update_time")
@@ -40,7 +40,7 @@ class VideoInfo {
 
 	Map<String, dynamic> toJson() => $VideoInfoToJson(this);
 
-	VideoInfo copyWith({int? id, int? userId, String? title, String? alias, String? picUser, String? picUrl, String? playUrl, int? sec, int? favoriteNum, int? commentNum, int? collectNum, int? shareNum, int? isFavorite, int? isCollected, String? createTime, String? updateTime, dynamic topic}) {
+	VideoInfo copyWith({int? id, int? userId, String? title, String? alias, String? picUser, String? picUrl, String? playUrl, int? sec, int? favoriteNum, int? commentNum, int? collectNum, int? shareNum, bool? isFavorite, bool? isCollected, String? createTime, String? updateTime, dynamic topic}) {
 		return VideoInfo()
 			..id= id ?? this.id
 			..userId= userId ?? this.userId

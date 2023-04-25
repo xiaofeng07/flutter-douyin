@@ -51,11 +51,11 @@ VideoInfo $VideoInfoFromJson(Map<String, dynamic> json) {
 	if (shareNum != null) {
 		videoInfo.shareNum = shareNum;
 	}
-	final int? isFavorite = jsonConvert.convert<int>(json['is_favorite']);
+	final bool? isFavorite = jsonConvert.convert<bool>(json['is_favorite']);
 	if (isFavorite != null) {
 		videoInfo.isFavorite = isFavorite;
 	}
-	final int? isCollected = jsonConvert.convert<int>(json['is_collected']);
+	final bool? isCollected = jsonConvert.convert<bool>(json['is_collected']);
 	if (isCollected != null) {
 		videoInfo.isCollected = isCollected;
 	}

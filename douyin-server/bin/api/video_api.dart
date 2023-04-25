@@ -10,7 +10,6 @@ class VideoApi {
   //获取视频列表
   Future<Response> _getVideoList(Request request) async {
     var result = await VideoDao().queryVideoList();
-
     return Response.ok(
         jsonEncode({'code': 200, 'message': 'ok', 'data': result}),
         headers: {

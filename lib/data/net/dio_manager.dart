@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_douyin/common/app_config.dart';
+import 'package:flutter_douyin/common/global.dart';
 import 'package:flutter_douyin/data/model/base_response.dart';
 import 'package:flutter_douyin/data/net/interceptor.dart';
 import 'package:flutter_douyin/utils/dialog_utils.dart';
@@ -17,52 +18,60 @@ import 'package:flutter_douyin/utils/dialog_utils.dart';
 /// @Version:        1.0
 
 class DioManager {
-  final Dio _dio= Dio();
+  Dio? _dio;
 
   static DioManager? _instance;
 
-  DioManager._() {
-        _dio.options = BaseOptions(
+  DioManager._internal() {
+        _dio=Dio();
+        BaseOptions options = BaseOptions(
           baseUrl: Address.BASE_URL,
           receiveTimeout: const Duration(seconds: 5),
           connectTimeout: const Duration(seconds: 6),
         );
-        _dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
-        _dio.interceptors.add(HeaderInterceptor());
-        _dio.interceptors.add(ResponseInterceptor());
-        _dio.interceptors.add(CacheInterceptor());
+        _dio = Dio(options);
+        _dio?.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+        _dio?.interceptors.add(HeaderInterceptor());
+        _dio?.interceptors.add(ResponseInterceptor());
+        _dio?.interceptors.add(CacheInterceptor());
   }
 
   setBaseUrl(String baseUrl){
-      _dio.options.baseUrl = baseUrl;
+      _dio?.options.baseUrl = baseUrl;
   }
 
   factory DioManager() {
-    _instance ??= DioManager._();
+    _instance ??= DioManager._internal();
     return _instance!;
   }
 
-  Future<ResultData> get(String path,
+  Future<ResultData<T>> get<T>(String path,
       {Map<String, dynamic>? queryParameters,withLoading = false}) async {
     if (withLoading) {
       LoadingUtils.show();
     }
     try {
       final response =
-      await _dio.get(path, queryParameters: queryParameters);
-      return response.data;
+      await _dio?.get(path, queryParameters: queryParameters);
+      return _handResult<T>(response!);
     } on DioError catch (e) {
       return _handleError(e);
     }
   }
 
-   Future<ResultData> post(String path, dynamic data, {withLoading = false}) async {
+  _handResult<T>(Response<dynamic> response) {
+     ResultData result = ResultData<T>.fromJson(response!.data);
+     logger.d("_handResult==>${result}");
+    return result;
+  }
+
+   Future<ResultData<T>> post<T>(String path, dynamic data, {withLoading = false}) async {
     if (withLoading) {
       LoadingUtils.show();
     }
     try {
-      final response = await _dio.post(path, data: data);
-      return response.data;
+      final response = await _dio?.post(path, data: data);
+      return _handResult<T>(response!);
     } on DioError catch (e) {
       return _handleError(e);
     }
@@ -73,8 +82,8 @@ class DioManager {
       LoadingUtils.show();
     }
     try {
-      final response = await _dio.put(path, data: data);
-      return response.data;
+      final response = await _dio?.put(path, data: data);
+      return response?.data;
     } on DioError catch (e) {
       return _handleError(e);
     }
@@ -85,8 +94,8 @@ class DioManager {
       LoadingUtils.show();
     }
     try {
-      final response = await _dio.delete(path);
-      return response.data;
+      final response = await _dio?.delete(path);
+      return response?.data;
     } on DioError catch (e) {
       return _handleError(e);
     }
@@ -98,8 +107,8 @@ class DioManager {
     }
     try {
       final formData = FormData.fromMap({"file": await MultipartFile.fromFile(file.path)});
-      final response = await _dio.post(path, data: formData);
-      return response.data;
+      final response = await _dio?.post(path, data: formData);
+      return response?.data;
     } on DioError catch (e) {
       return _handleError(e);
     }
@@ -109,7 +118,7 @@ class DioManager {
     if (withLoading) {
       LoadingUtils.show();
     }
-    final response = await _dio.download(url, savePath);
+    final response = await _dio?.download(url, savePath);
     return File(savePath);
   }
 

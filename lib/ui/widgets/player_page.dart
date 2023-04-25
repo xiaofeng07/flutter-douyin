@@ -7,6 +7,7 @@ import 'package:flutter_douyin/ui/animation/favorite_heart.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:player/player.dart';
 import 'package:player/video_view.dart';
+import 'package:flutter_douyin/ext/int_ext.dart';
 
 /// @Name:           player_page.dart
 /// @Description:    视频播放页
@@ -46,7 +47,9 @@ class _VideoScreenState extends State<VideoScreen> {
         FavoriteHeart(
             child: VideoView(
           player: player,
-        )),
+        ),callBack: (){
+          videoInfo.isFavorite=true;
+        },),
         Align(
             alignment: Alignment.bottomRight,
             child: Padding(
@@ -66,7 +69,7 @@ class _VideoScreenState extends State<VideoScreen> {
                         },
                         child: ClipOval(
                             child: Image.network(
-                          'https://pic.netbian.com/uploads/allimg/170424/105210-1493002330557b.jpg',
+                              '${videoInfo.picUser}',
                           width: 60,
                           height: 60,
                           fit: BoxFit.fill,
@@ -87,23 +90,36 @@ class _VideoScreenState extends State<VideoScreen> {
                     ],
                   ),
                   const SizedBox(height: 15),
-                  const Icon(
-                    AppIcons.favorite,
-                    color: Colors.white,
-                    size: 40,
-                  ),
+                   GestureDetector(onTap: (){
+                     videoInfo.isFavorite=!videoInfo.isFavorite!;
+                      setState(() {
+
+                      });
+                   },child: Icon(
+                     AppIcons.favorite,
+                     color: videoInfo.isFavorite!?Colors.pinkAccent:Colors.white,
+                     size: 40,
+                   ),),
+                  Text("${videoInfo.favoriteNum?.format()}"),
                   const SizedBox(height: 15),
                   const Icon(
                     AppIcons.comment,
                     color: Colors.white,
                     size: 40,
                   ),
+                  Text("${videoInfo.commentNum?.format()}"),
                   const SizedBox(height: 15),
-                  const Icon(
+                  GestureDetector(onTap: (){
+                    videoInfo.isCollected=!videoInfo.isCollected!;
+                    setState(() {
+
+                    });
+                  },child:  Icon(
                     AppIcons.collect,
-                    color: Colors.white,
+                    color: videoInfo.isCollected==true ?Colors.orangeAccent:Colors.white,
                     size: 40,
-                  ),
+                  ),),
+                  Text("${videoInfo.collectNum?.format()}"),
                   const SizedBox(height: 15),
                   IconButton(
                       onPressed: () {
